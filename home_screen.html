@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece Character Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Exo 2', sans-serif;
+            position: relative;
+            background: #080808;
+            color: #fff;
+        }
+
+        .scene-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Darker Backgrounds with subtle animations */
+        .scene-container.luffy {
+            background: linear-gradient(45deg, #0f0f0f, #1a1a1a, #0f0f0f);
+            animation: bgGradient 10s infinite alternate;
+        }
+
+        .scene-container.zoro {
+            background: linear-gradient(45deg, #0d0d0d, #171717, #0d0d0d);
+            animation: bgGradient 12s infinite alternate;
+        }
+
+        .scene-container.nami {
+            background: linear-gradient(45deg, #0e0e0e, #191919, #0e0e0e);
+            animation: bgGradient 11s infinite alternate;
+        }
+
+        .scene-container.robin {
+            background: linear-gradient(45deg, #0a0a0a, #141414, #0a0a0a);
+            animation: bgGradient 13s infinite alternate;
+        }
+
+        .scene-container.sanji {
+            background: linear-gradient(45deg, #0c0c0c, #161616, #0c0c0c);
+            animation: bgGradient 14s infinite alternate;
+        }
+
+        @keyframes bgGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Adding subtle noise effect */
+        .scene-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAAAC0lEQVR42mNkgANGQkJlgJEQAAEcgADzlT0AAAAASUVORK5CYII=');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* Enhanced Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 6s infinite linear, twinkle 3s infinite alternate;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        .character-stage {
+            position: relative;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 50px;
+        }
+
+        .character-image {
+            max-width: 100%;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            filter: drop-shadow(0 0 22px rgba(0, 0, 0, 0.9));
+            transition: transform 0.3s ease-in-out;
+            z-index: 2;
+            position: relative;
+        }
+
+        .character-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Glowing effect using pseudo-element*/
+        .character-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            background: rgba(255, 255, 255, 0.3);
+            filter: blur(10px);
+            opacity: 0.7;
+            z-index: -1;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        /* Keyframes for pulsating glow */
+        @keyframes pulseGlow {
+            0% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0.9;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        /* Enhanced Entrance Animation */
+        @keyframes characterEntrance {
+            0% {
+                transform: scale(0.2) translateY(100px) rotate(-10deg);
+                opacity: 0;
+                filter: blur(12px) drop-shadow(0 0 35px rgba(0, 0, 0, 0.9));
+            }
+
+            100% {
+                transform: scale(1) translateY(0) rotate(0deg);
+                opacity: 1;
+                filter: blur(0) drop-shadow(0 0 22px rgba(0, 0, 0, 0.9));
+            }
+        }
+
+        .character-details {
+            position: relative;
+            width: 45%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding-left: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .character-name {
+            position: relative;
+            margin-top: 30px;
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 22px rgba(255, 255, 255, 0.4);
+            opacity: 0;
+            animation: titleReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+            text-align: left;
+            width: 100%;
+        }
+
+        .character-role {
+            position: relative;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: clamp(1.1rem, 2.7vw, 1.65rem);
+            font-weight: 300;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: subtitleReveal 1s ease-out 0.8s forwards;
+            text-align: left;
+            width: 100%;
+        }
+
+        @keyframes titleReveal {
+            0% {
+                transform: translateY(-55px) scale(0.7) rotateX(45deg);
+                opacity: 0;
+                filter: blur(12px);
+            }
+
+            100% {
+                transform: translateY(0) scale(1) rotateX(0deg);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes subtitleReveal {
+            0% {
+                transform: translateX(-35px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 0.7;
+            }
+        }
+
+        .detail-line {
+            position: relative;
+            margin: 25px 0;
+            opacity: 0;
+            animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, glow 4s infinite alternate;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        @keyframes glow {
+            0% {
+                filter: brightness(1);
+            }
+
+            100% {
+                filter: brightness(1.2);
+            }
+        }
+
+        .detail-line:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .detail-line:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .detail-line:nth-child(3) {
+            animation-delay: 0.7s;
+        }
+
+        .detail-line:nth-child(4) {
+            animation-delay: 0.9s;
+        }
+
+        @keyframes slideInRight {
+            0% {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced Connecting Line */
+        .connecting-line {
+            position: relative;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #777, #777, transparent);
+            opacity: 0.6;
+            animation: lineGlow 2s ease-in-out infinite;
+            margin-right: 15px;
+        }
+
+        .connecting-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -3px;
+            width: 8px;
+            height: 8px;
+            background: #777;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #777;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes lineGlow {
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px #777;
+            }
+
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 15px #777, 0 0 20px #777;
+            }
+        }
+
+        /* Enhanced Detail Content */
+        .detail-content {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.7);
+            min-width: 200px;
+            transition: transform 0.3s ease-in-out;
+            flex: 1;
+        }
+
+        .detail-content:hover {
+            transform: translateY(-5px);
+        }
+
+        .detail-label {
+            color: #ddd;
+            font-size: 13px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            opacity: 0.7;
+        }
+
+        .detail-value {
+            color: #eee;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Orbitron', monospace;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .detail-content:hover .detail-value {
+            color: #fff;
+        }
+
+        /* Enhanced Bounty Value */
+        .bounty-value {
+            color: #ffc107;
+            font-size: 19px;
+            font-weight: 900;
+            text-shadow: 0 0 14px #ffc107;
+            animation: goldShimmer 3s ease-in-out infinite, pulseGold 5s infinite alternate;
+        }
+
+        @keyframes goldShimmer {
+            0%,
+            100% {
+                text-shadow: 0 0 14px #ffc107;
+            }
+
+            50% {
+                text-shadow: 0 0 18px #ffc107, 0 0 22px #ffc107;
+            }
+        }
+
+        @keyframes pulseGold {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Enhanced Navigation */
+        .navigation {
+            position: absolute;
+            bottom: 2%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 15;
+        }
+
+        .nav-btn {
+            width: 52px;
+            height: 52px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 17px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 9px 22px rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Enhanced Character Indicators */
+        .character-indicators {
+            display: flex;
+            gap: 13px;
+            margin: 0 16px;
+        }
+
+        .indicator {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.17);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .indicator.active {
+            background: #fff;
+            transform: scale(1.45);
+            box-shadow: 0 0 13px #fff;
+        }
+
+        .indicator.active::before {
+            content: '';
+            position: absolute;
+            inset: -7px;
+            border: 2px solid rgba(255, 255, 255, 0.17);
+            border-radius: 50%;
+            animation: ripple 2s infinite;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .character-stage {
+                padding-left: 25px;
+            }
+
+            .character-name {
+                font-size: clamp(2rem, 4.5vw, 3.8rem);
+            }
+
+            .character-role {
+                font-size: clamp(1rem, 2.5vw, 1.5rem);
+            }
+
+            .detail-line {
+                margin: 20px 0;
+            }
+
+            .detail-content {
+                padding: 12px 20px;
+            }
+
+            .detail-value {
+                font-size: 15px;
+            }
+
+            .bounty-value {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .scene-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 20px;
+            }
+
+            .character-stage {
+                width: 100%;
+                height: 60vh;
+                padding-left: 0;
+                order: 1;
+            }
+
+            .character-image {
+                max-height: 50vh;
+            }
+
+            .character-details {
+                width: 100%;
+                height: 40vh;
+                align-items: center;
+                padding: 0 20px;
+                order: 2;
+                overflow-y: auto;
+                justify-content: flex-start;
+            }
+
+            .character-name {
+                text-align: center;
+                margin-top: 10px;
+                font-size: clamp(1.8rem, 6vw, 3rem);
+            }
+
+            .character-role {
+                text-align: center;
+                font-size: clamp(0.9rem, 3vw, 1.3rem);
+                margin-bottom: 15px;
+            }
+
+            .detail-line {
+                flex-direction: row;
+                justify-content: center;
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .connecting-line {
+                width: 30px;
+                margin-right: 10px;
+            }
+
+            .detail-content {
+                width: auto;
+                min-width: 250px;
+                max-width: 400px;
+                padding: 10px 18px;
+            }
+
+            .detail-value {
+                font-size: 14px;
+            }
+
+            .bounty-value {
+                font-size: 16px;
+            }
+
+            .navigation {
+                bottom: 5%;
+            }
+
+            .nav-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .character-stage {
+                height: 55vh;
+            }
+
+            .character-image {
+                max-height: 45vh;
+            }
+
+            .character-details {
+                height: 45vh;
+                padding: 0 15px;
+            }
+
+            .character-name {
+                font-size: clamp(1.6rem, 7vw, 2.5rem);
+            }
+
+            .character-role {
+                font-size: clamp(0.8rem, 3.5vw, 1.2rem);
+            }
+
+            .detail-line {
+                margin: 12px 0;
+            }
+
+            .detail-content {
+                min-width: 200px;
+                max-width: 350px;
+                padding: 8px 15px;
+            }
+
+            .detail-value {
+                font-size: 13px;
+            }
+
+            .bounty-value {
+                font-size: 15px;
+            }
+
+            .detail-label {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .scene-container {
+                padding-top: 15px;
+            }
+
+            .character-stage {
+                height: 50vh;
+            }
+
+            .character-image {
+                max-height: 40vh;
+            }
+
+            .character-details {
+                height: 50vh;
+                padding: 0 10px;
+            }
+
+            .connecting-line {
+                display: none;
+            }
+
+            .detail-line {
+                flex-direction: column;
+                align-items: center;
+                margin: 10px 0;
+            }
+
+            .detail-content {
+                width: 95%;
+                max-width: 320px;
+                text-align: center;
+            }
+
+            .character-indicators {
+                gap: 10px;
+            }
+
+            .indicator {
+                width: 10px;
+                height: 10px;
+            }
+
+            .nav-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .character-name {
+                font-size: clamp(1.4rem, 8vw, 2.2rem);
+                margin-top: 5px;
+            }
+
+            .character-role {
+                font-size: clamp(0.7rem, 4vw, 1.1rem);
+                margin-bottom: 10px;
+            }
+
+            .detail-content {
+                padding: 8px 12px;
+                max-width: 280px;
+            }
+
+            .detail-value {
+                font-size: 12px;
+            }
+
+            .bounty-value {
+                font-size: 14px;
+            }
+
+            .detail-label {
+                font-size: 10px;
+            }
+
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .character-indicators {
+                gap: 8px;
+            }
+
+            .indicator {
+                width: 8px;
+                height: 8px;
+            }
+
+            .navigation {
+                gap: 15px;
+                bottom: 3%;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .character-details {
+                padding: 0 8px;
+            }
+
+            .detail-content {
+                padding: 6px 10px;
+                max-width: 260px;
+            }
+
+            .detail-value {
+                font-size: 11px;
+                line-height: 1.3;
+            }
+
+            .bounty-value {
+                font-size: 13px;
+            }
+
+            .detail-label {
+                font-size: 9px;
+                margin-bottom: 3px;
+            }
+
+            .navigation {
+                gap: 12px;
+            }
+        }
+
+        /* Landscape mobile orientation */
+        @media (max-height: 500px) and (max-width: 900px) {
+            .scene-container {
+                flex-direction: row;
+                padding-top: 0;
+            }
+
+            .character-stage {
+                width: 50%;
+                height: 100vh;
+                order: 1;
+            }
+
+            .character-image {
+                max-height: 80vh;
+            }
+
+            .character-details {
+                width: 50%;
+                height: 100vh;
+                order: 2;
+                overflow-y: auto;
+                padding: 10px;
+            }
+
+            .character-name {
+                text-align: left;
+                margin-top: 20px;
+                font-size: clamp(1.2rem, 4vw, 2rem);
+            }
+
+            .character-role {
+                text-align: left;
+                font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+            }
+
+            .detail-line {
+                flex-direction: row;
+                margin: 8px 0;
+            }
+
+            .connecting-line {
+                display: block;
+                width: 20px;
+                margin-right: 8px;
+            }
+
+            .detail-content {
+                min-width: auto;
+                max-width: none;
+                flex: 1;
+                padding: 6px 12px;
+            }
+
+            .detail-value {
+                font-size: 11px;
+            }
+
+            .bounty-value {
+                font-size: 13px;
+            }
+
+            .navigation {
+                bottom: 2%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sceneContainer" class="scene-container">
+        <!-- Floating Particles -->
+        <div class="particles" id="particles"></div>
+
+        <!-- Character Stage -->
+        <div class="character-stage">
+            <img id="characterImage" class="character-image" src="" alt="">
+        </div>
+
+        <div class="character-details">
+            <div id="characterName" class="character-name"></div>
+            <div id="characterRole" class="character-role"></div>
+
+            <div class="detail-line">
+                <div class="connecting-line"></div>
+                <div class="detail-content">
+                    <div class="detail-label">Bounty</div>
+                    <div id="bountyValue" class="detail-value bounty-value"></div>
+                </div>
+            </div>
+
+            <div class="detail-line">
+                <div class="connecting-line"></div>
+                <div class="detail-content">
+                    <div class="detail-label">Devil Fruit</div>
+                    <div id="devilFruitValue" class="detail-value"></div>
+                </div>
+            </div>
+
+            <div class="detail-line">
+                <div class="connecting-line"></div>
+                <div class="detail-content">
+                    <div class="detail-label">Fighting Style</div>
+                    <div id="fightingStyleValue" class="detail-value"></div>
+                </div>
+            </div>
+
+            <div class="detail-line">
+                <div class="connecting-line"></div>
+                <div class="detail-content">
+                    <div class="detail-label">Dream</div>
+                    <div id="dreamValue" class="detail-value"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+            <div class="character-indicators" id="indicators"></div>
+            <button id="nextBtn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        class CharacterExperience {
+            constructor() {
+                this.currentIndex = 0;
+                this.characters = [{
+                        name: "Monkey D. Luffy",
+                        image: "images/Monkey_D_Luffy.png",
+                        role: "Captain & Future Pirate King",
+                        bounty: "5,000,000,000",
+                        devilFruit: "Hito Hito no Mi, Model: Nika (Mythical Zoan) - Sun God Power!",
+                        fightingStyle: "Rubber-Man Combat, Gear System Unleashed, All Forms of Haki Mastered",
+                        dream: "To become the Pirate King & bring true freedom to the world!",
+                        theme: "luffy"
+                    },
+                    {
+                        name: "Roronoa Zoro",
+                        image: "images/roronoa_zoro_1.png",
+                        role: "Sword Master & First Mate",
+                        bounty: "1,111,000,000",
+                        devilFruit: "None (Pure Sword Skill!)",
+                        fightingStyle: "Santoryu (Three-Sword Style) - Ashura, Advanced Busoshoku Haki",
+                        dream: "To become the World's Greatest Swordsman & never lose again!",
+                        theme: "zoro"
+                    },
+                    {
+                        name: "Nami",
+                        image: "images/Nami_one_piece.png",
+                        role: "Navigator & Weather Witch",
+                        bounty: "366,000,000",
+                        devilFruit: "None (Master of Clima-Tact & Observation)",
+                        fightingStyle: "Clima-Tact: Manipulating Weather, Thunderbolt Tempo, Gust Sword",
+                        dream: "To draw a complete map of the entire world, including its uncharted seas!",
+                        theme: "nami"
+                    },
+                    {
+                        name: "Nico Robin",
+                        image: "images/Nico_Robin_1.png",
+                        role: "Archaeologist & Devil Child",
+                        bounty: "930,000,000",
+                        devilFruit: "Hana Hana no Mi (Flower-Flower Fruit) - Sprouting Limbs at Will!",
+                        fightingStyle: "Gigante Fleur, Ochenta Fleur, Demonio Fleur: Precise & Deadly Blooms",
+                        dream: "To uncover the True History by finding the Rio Poneglyph!",
+                        theme: "robin"
+                    },
+                    {
+                        name: "Vinsmoke Sanji",
+                        image: "images/Vinsmoke_Sanji.png",
+                        role: "Chief Cook & Prince of Stealth",
+                        bounty: "1,032,000,000",
+                        devilFruit: "None (Genetically Enhanced Human)",
+                        fightingStyle: "Black Leg Style: Fire-Forged Kicks, Sky Walk, Observation Haki Master",
+                        dream: "To find the All Blue, the legendary sea where all fish species converge!",
+                        theme: "sanji"
+                    }
+                ];
+
+                this.init();
+            }
+
+            init() {
+                this.createParticles();
+                this.createIndicators();
+                this.updateCharacter();
+                this.bindEvents();
+            }
+
+            createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                for (let i = 0; i < 60; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
+            createIndicators() {
+                const indicatorsContainer = document.getElementById('indicators');
+                indicatorsContainer.innerHTML = '';
+
+                this.characters.forEach((_, index) => {
+                    const indicator = document.createElement('button');
+                    indicator.className = 'indicator';
+                    indicator.addEventListener('click', () => this.goToCharacter(index));
+                    indicatorsContainer.appendChild(indicator);
+                });
+            }
+
+            updateCharacter() {
+                const character = this.characters[this.currentIndex];
+                const sceneContainer = document.getElementById('sceneContainer');
+
+                // Update background theme
+                sceneContainer.className = `scene-container ${character.theme}`;
+
+                // Update character image
+                const img = document.getElementById('characterImage');
+                img.src = character.image;
+                img.alt = character.name;
+
+                // Trigger entrance animation
+                img.style.animation = 'none';
+                img.offsetHeight; // Force reflow
+                img.style.animation = 'characterEntrance 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+
+                // Update character info
+                document.getElementById('characterName').textContent = character.name;
+                document.getElementById('characterRole').textContent = character.role;
+
+                // Update details with staggered animation
+                const details = ['bountyValue', 'devilFruitValue', 'fightingStyleValue', 'dreamValue'];
+                const values = [character.bounty, character.devilFruit, character.fightingStyle, character.dream];
+
+                details.forEach((id, index) => {
+                    const element = document.getElementById(id);
+                    element.style.opacity = '0';
+                    setTimeout(() => {
+                        element.textContent = values[index];
+                        element.style.opacity = '1';
+                    }, 300 + (index * 100));
+                });
+
+                // Reset detail line animations
+                document.querySelectorAll('.detail-line').forEach((line, index) => {
+                    line.style.animation = 'none';
+                    line.offsetHeight;
+                    line.style.animation = `slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${0.3 + (index * 0.2)}s forwards`;
+                });
+
+                // Reset title animations
+                const nameEl = document.getElementById('characterName');
+                const roleEl = document.getElementById('characterRole');
+
+                nameEl.style.animation = 'none';
+                roleEl.style.animation = 'none';
+                nameEl.offsetHeight;
+                roleEl.offsetHeight;
+                nameEl.style.animation = 'titleReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards';
+                roleEl.style.animation = 'subtitleReveal 1s ease-out 0.8s forwards';
+
+                // Update navigation
+                document.getElementById('prevBtn').disabled = this.currentIndex === 0;
+                document.getElementById('nextBtn').disabled = this.currentIndex === this.characters.length - 1;
+
+                // Update indicators
+                document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === this.currentIndex);
+                });
+            }
+
+            bindEvents() {
+                document.getElementById('prevBtn').addEventListener('click', () => this.prevCharacter());
+                document.getElementById('nextBtn').addEventListener('click', () => this.nextCharacter());
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') this.prevCharacter();
+                    if (e.key === 'ArrowRight') this.nextCharacter();
+                });
+
+                // Touch/swipe support
+                let touchStartX = null;
+                document.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].clientX;
+                });
+
+                document.addEventListener('touchend', (e) => {
+                    if (!touchStartX) return;
+
+                    const touchEndX = e.changedTouches[0].clientX;
+                    const diff = touchStartX - touchEndX;
+
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) this.nextCharacter();
+                        else this.prevCharacter();
+                    }
+
+                    touchStartX = null;
+                });
+
+                // Image error handling
+                document.getElementById('characterImage').addEventListener('error', (e) => {
+                    console.log('Image failed to load:', e.target.src);
+                    e.target.style.opacity = '0.5';
+                });
+            }
+
+            nextCharacter() {
+                if (this.currentIndex < this.characters.length - 1) {
+                    this.currentIndex++;
+                    this.updateCharacter();
+                }
+            }
+
+            prevCharacter() {
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
+                    this.updateCharacter();
+                }
+            }
+
+            goToCharacter(index) {
+                this.currentIndex = index;
+                this.updateCharacter();
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new CharacterExperience();
+        });
+    </script>
+</body>
+
+</html>
