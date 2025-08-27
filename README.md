@@ -45,7 +45,7 @@ This website serves as a comprehensive resource for _One Piece_ fans. You can br
 <img width="3072" height="1650" alt="image" src="https://github.com/user-attachments/assets/919f0572-6928-43ae-a2e1-9e91f3175e3e" />
 <img width="3072" height="1650" alt="image" src="https://github.com/user-attachments/assets/dc28cbac-bd69-4c3f-a537-80176ed3ba78" />
 <img width="3072" height="1650" alt="image" src="https://github.com/user-attachments/assets/34866447-abf8-4b8c-9279-c9ded5515a70" />
-<img width="3072" height="1650" alt="image" src="https://github.com/user-attachments/assets/f2a29518-b648-4baf-9bf9-a89b4e6aa91e" />
+<img width="3072" height="1650" alt="image" src="https://github.com/user-attachments/assets/ad53aff9-6fb7-4fc5-b052-4a880048b53a" />
 <img width="3072" height="1650" alt="image" src="https://github.com/user-attachments/assets/3c6a0f22-eb04-4aed-b394-99a6af396794" />
 
 
@@ -96,3 +96,4 @@ This website serves as a comprehensive resource for _One Piece_ fans. You can br
 ---
 
 _This site is for educational and entertainment purposes only. All images and content related to One Piece are © Eiichiro Oda/Shueisha/Toei Animation._
+
